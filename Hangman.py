@@ -19,7 +19,6 @@ class Hangman():
         self.wrong = []
         self.word = random.choice(words)
         self.reveal = ['_']*len(self.word)
-        # What else?
 
     
     # Get letter input. Input must be a new letter.
@@ -27,11 +26,11 @@ class Hangman():
         valid = False
         letter = None
         while not valid:
-            letter = input('Guess a letter: ').lower()
-            if letter.isalpha() and letter not in self.correct and letter not in self.wrong:
+            letter = input('Guess a letter: ').upper()
+            if letter.isalpha() and letter not in self.correct and letter not in self.wrong and len(letter) == 1:
                 valid = True
             else:
-                print("Invalid input - must be a new letter")
+                print("Invalid input - must be a single new letter")
         if letter in self.word:
             self.correct.append(letter)
         else:
@@ -40,29 +39,26 @@ class Hangman():
 
     # Show spaces, display correct/incorrect letters.
     def reveal_text(self):
-        wrong_letters = ''
         for i in range(len(self.word)):
             if self.word[i] in self.correct:
                 self.reveal[i] = self.word[i]
-            '''elif i in self.wrong:
-                wrong_letters += i + ' '''
         print(f"\n{''.join(self.reveal)}\n\nWrong letters guessed: {', '.join(self.wrong)}")
                 
 
     # Print Hangman status; 6 body parts total. Show remaining wrong guesses
     def display_person(self):
         if len(self.wrong) < 1:
-            print('''\n +---+\n     |\n     |\n     |\n=======''')
+            print('''\n +---+\n     |\n     |\n     |\n=======\n''')
         elif len(self.wrong) == 1:
-            print('''\n +---+\n O   |\n     |\n     |\n=======''' + "\n5 incorrect guesses left.")
+            print('''\n +---+\n O   |\n     |\n     |\n=======''' + "\n5 incorrect guesses left.\n")
         elif len(self.wrong) == 2:
-            print('''\n +---+\n O   |\n/    |\n     |\n=======''' + "\n4 incorrect guesses left.")
+            print('''\n +---+\n O   |\n/    |\n     |\n=======''' + "\n4 incorrect guesses left.\n")
         elif len(self.wrong) == 3:
-            print('''\n +---+\n O   |\n/|   |\n     |\n=======''' + "\n3 incorrect guesses left.")
+            print('''\n +---+\n O   |\n/|   |\n     |\n=======''' + "\n3 incorrect guesses left.\n")
         elif len(self.wrong) == 4:
-            print('''\n +---+\n O   |\n/|\  |\n     |\n=======''' + "\n2 incorrect guesses left.")
+            print('''\n +---+\n O   |\n/|\  |\n     |\n=======''' + "\n2 incorrect guesses left.\n")
         elif len(self.wrong) == 5:
-            print('''\n +---+\n O   |\n/|\  |\n/    |\n=======''' + "\n1 incorrect guess left.")
+            print('''\n +---+\n O   |\n/|\  |\n/    |\n=======''' + "\n1 incorrect guess left.\n")
         elif len(self.wrong) == 6:
             print('''\n +---+\n O   |\n/|\  |\n/ \  |\n=======''' + "\nGame Over!")
 
@@ -76,10 +72,8 @@ def main():
         h.reveal_text()
         h.display_person()
         if '_' not in h.reveal:
+            print("You win!")
             break
-    print("Game over!")
-
-# Implement quit.
 
 if __name__ == "__main__":
     main()
